@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import route from "./route/userRoute.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import cors from "cors";
 
 
 const app = express();
@@ -12,7 +15,19 @@ const PORT = process.env.PORT || 3000;
 const MONGOURL = process.env.MONGOURL;
 
 console.log("Mongourl: ",MONGOURL);
+// Allow requests from specific origins
+const allowedOrigins = ['http://localhost:3000','http://localhost:5173' ,'http://localhost:5174']; // Add your frontend ports here
 
+// CORS configuration
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+}));
 const connect = () => {
     mongoose.connect(MONGOURL, {
         useNewUrlParser: true,

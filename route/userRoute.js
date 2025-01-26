@@ -1,5 +1,5 @@
 import express from "express"
-import { fetch , createABC , update, deleteUser} from "../controller/userController.js"
+import { fetch , createUser , update, deleteUser, loginUser} from "../controller/userController.js"
 // import upload from "../../backend practice/middlewares/multer/multer.js"
 import upload from '../middlewares/multer/multer.js'
 // import uploadMultiple from "../../backend practice/middlewares/upload/uploadMultiple.js"
@@ -10,7 +10,8 @@ import uploadMultiple from '../middlewares/upload/uploadMultiple.js'
 
 const  route = express.Router();
 
-route.post("/create",createABC);
+route.post("/signup",createUser);
+route.post("/login",loginUser);
 route.get("/getAllUsers",fetch);
 route.put("/update/:id",update);
 route.delete("/delete/:id",deleteUser);
